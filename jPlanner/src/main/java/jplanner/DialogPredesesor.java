@@ -36,7 +36,7 @@ public class DialogPredesesor extends javax.swing.JDialog {
     }
     
     private void initData() {
-        aktivitases = JPlanner.getjPlannerService().findAll(Aktivitas.class.getName());
+        aktivitases = JPlanner.getjPlannerService().findAllAktivitas();
         jTable1.setModel(new AktifitasTableModel(aktivitases));
     }
 

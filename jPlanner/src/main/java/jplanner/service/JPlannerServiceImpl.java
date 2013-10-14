@@ -35,9 +35,13 @@ public class JPlannerServiceImpl implements JPlannerService {
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
         
         // update resource dulu
-//        Resource r = obj.getResource();
-//        r.setIsUsed(Boolean.TRUE);
-//        sessionFactory.getCurrentSession().saveOrUpdate(r);
+        List<Resource> resources = obj.getResources();
+        for (Resource r : resources) {
+            r.setIsUsed(Boolean.TRUE);
+            r.setAktivitas(obj);
+            
+            sessionFactory.getCurrentSession().saveOrUpdate(r);
+        }
     }
 
     @Override
@@ -78,5 +82,12 @@ public class JPlannerServiceImpl implements JPlannerService {
         }
         
         return durasi;
+    }
+
+    @Override
+    public List<Aktivitas> findAllAktivitas() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Aktivitas a")
+                .list();
     }
 }

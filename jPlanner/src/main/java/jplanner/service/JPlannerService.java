@@ -25,4 +25,6 @@ public interface JPlannerService {
     List<Aktivitas> findAllAktivitasByProject(Proyek proyek);
 
     public Integer findAktivitasByProject(Proyek p);
+
+    List<Aktivitas> findAllAktivitas();
 }
