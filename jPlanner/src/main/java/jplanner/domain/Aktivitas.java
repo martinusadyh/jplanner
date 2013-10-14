@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,6 +44,10 @@ public class Aktivitas implements Serializable {
     private Proyek proyek;
     
     private String predesesor;
+    
+    @ManyToOne
+    @JoinColumn(name="id_parent", referencedColumnName="id")
+    private Aktivitas parent;
 
     public Integer getId() {
         return id;
@@ -100,6 +105,14 @@ public class Aktivitas implements Serializable {
         this.predesesor = predesesor;
     }
 
+    public Aktivitas getParent() {
+        return parent;
+    }
+
+    public void setParent(Aktivitas parent) {
+        this.parent = parent;
+    }
+    
     @Override
     public String toString() {
         return "Nama Aktivitas=[" + nama + ']';
