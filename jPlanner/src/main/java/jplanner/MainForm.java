@@ -28,6 +28,7 @@ public class MainForm extends javax.swing.JFrame {
     private GrupResource grupResource;
     private Resource resource;
     private Aktivitas aktivitas;
+    private Aktivitas parent;
     
     private List<Proyek> proyeks;
     private List<GrupResource> grupResources;
@@ -864,8 +865,10 @@ public class MainForm extends javax.swing.JFrame {
         spinnerDurasi.removeAllItems();
         txtNmAktivitas.setText("");
         txtPredesesor.setText("");
+        txtParentTask.setText("");
         
         proyek = null;
+        parent = null;
         proyeks = new ArrayList<Proyek>();
         
         selectedResources = new ArrayList<Resource>();
@@ -877,6 +880,7 @@ public class MainForm extends javax.swing.JFrame {
         aktivitas.setResources(selectedResources);
         aktivitas.setNama(txtNmAktivitas.getText());
         aktivitas.setDurasi((Integer)spinnerDurasi.getSelectedItem());
+        aktivitas.setParent(parent);
         
         JPlanner.getjPlannerService().saveAktivitas(aktivitas);
         resetFormAktivitas();
@@ -917,7 +921,10 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLookupProyekActionPerformed
 
     private void btnLookupParentTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupParentTaskActionPerformed
-        // TODO add your handling code here:
+        parent = new DialogParentTask(proyek).showDialog();
+        if(parent != null){
+            txtParentTask.setText(parent.getNomorTask() + " - " + parent.getNama());
+        }
     }//GEN-LAST:event_btnLookupParentTaskActionPerformed
 
     private void btnLookupResourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupResourceActionPerformed

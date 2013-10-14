@@ -28,7 +28,7 @@ import org.hibernate.annotations.CascadeType;
  * @author martinusadyh
  */
 @Entity
-@Table(name="aktivitas", uniqueConstraints=@UniqueConstraint(columnNames={"nomor_task", "proyek_id"}))
+@Table(name="aktivitas")
 public class Aktivitas implements Serializable {
     
     private static final long serialVersionUID = 1L;

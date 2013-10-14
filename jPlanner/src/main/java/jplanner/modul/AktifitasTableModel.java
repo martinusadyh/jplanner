@@ -16,7 +16,7 @@ import jplanner.domain.Resource;
 public class AktifitasTableModel extends AbstractTableModel {
     
     private List<Aktivitas> aktivitases;
-    private String[] header = new String[] { "Proyek", "Aktivitas", "Durasi (hari)", 
+    private String[] header = new String[] { "Nomor","Proyek", "Aktivitas", "Durasi (hari)", 
         "Resource", "Predesesor" };
 
     public AktifitasTableModel(List<Aktivitas> aktivitases) {
@@ -55,11 +55,12 @@ public class AktifitasTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Aktivitas a = aktivitases.get(rowIndex);
         switch (columnIndex) {
-            case 0 : return a.getProyek().getNamaProyek();
-            case 1 : return a.getNama();
-            case 2 : return a.getDurasi();
-            case 3 : return getResources(a);
-            case 4 : return a.getPredesesor();
+            case 0 : return a.getNomorTask();
+            case 1 : return a.getProyek().getNamaProyek();
+            case 2 : return a.getNama();
+            case 3 : return a.getDurasi();
+            case 4 : return getResources(a);
+            case 5 : return a.getPredesesor();
             default: return new Object();
         }
     }

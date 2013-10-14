@@ -30,10 +30,10 @@
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="276" max="32767" attributes="0"/>
-              <Component id="btnBatal" linkSize="1" min="-2" pref="53" max="-2" attributes="0"/>
+              <EmptySpace pref="259" max="32767" attributes="0"/>
+              <Component id="btnBatal" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnOK" linkSize="1" min="-2" max="-2" attributes="0"/>
+              <Component id="btnOK" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>

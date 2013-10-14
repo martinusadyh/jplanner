@@ -37,16 +37,15 @@ public class JPlannerServiceImpl implements JPlannerService {
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void saveAktivitas(Aktivitas obj) {
         obj.setNomorTask(generateNomorTask(obj.getProyek(), obj.getParent()));
-        sessionFactory.getCurrentSession().saveOrUpdate(obj);
 
         // update resource dulu
         List<Resource> resources = obj.getResources();
         for (Resource r : resources) {
             r.setIsUsed(Boolean.TRUE);
             r.setAktivitas(obj);
-
-            sessionFactory.getCurrentSession().saveOrUpdate(r);
         }
+        
+        sessionFactory.getCurrentSession().saveOrUpdate(obj);
     }
 
     private String generateNomorTask(Proyek p, Aktivitas parent) {
@@ -95,7 +94,7 @@ public class JPlannerServiceImpl implements JPlannerService {
     @Override
     public List<Aktivitas> findAllAktivitasByProject(Proyek proyek) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Aktivitas a where a.proyek.id = :prmProyekSID")
+                .createQuery("from Aktivitas a where a.proyek.id = :prmProyekSID order by a.nomorTask asc")
                 .setParameter("prmProyekSID", proyek.getId())
                 .list();
     }
@@ -135,7 +134,7 @@ public class JPlannerServiceImpl implements JPlannerService {
     @Override
     public List<Aktivitas> findAllAktivitas() {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Aktivitas a")
+                .createQuery("from Aktivitas a order by a.proyek.id asc, a.nomorTask asc")
                 .list();
     }
 }

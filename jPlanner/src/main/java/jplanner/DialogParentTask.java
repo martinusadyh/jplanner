@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jplanner.domain.Aktivitas;
+import jplanner.domain.Proyek;
 import jplanner.modul.AktifitasTableModel;
 
 /**
@@ -24,10 +25,10 @@ public class DialogParentTask extends javax.swing.JDialog {
     /**
      * Creates new form DialogPredesesor
      */
-    public DialogParentTask() {
+    public DialogParentTask(Proyek proyek) {
         super(new JFrame(), true);
         initComponents();
-        initData();
+        initData(proyek);
         
         setLocationRelativeTo(null);
     }
@@ -37,8 +38,8 @@ public class DialogParentTask extends javax.swing.JDialog {
         return result;
     }
     
-    private void initData() {
-        aktivitases = JPlanner.getjPlannerService().findAll(Aktivitas.class.getName());
+    private void initData(Proyek proyek) {
+        aktivitases = JPlanner.getjPlannerService().findAllAktivitasByProject(proyek);
         jTable1.setModel(new AktifitasTableModel(aktivitases));
         jTable1.getSelectionModel().addListSelectionListener(new TableSelection());
     }
@@ -111,16 +112,13 @@ public class DialogParentTask extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(13, 13, 13))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(276, Short.MAX_VALUE)
-                .addComponent(btnBatal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(259, Short.MAX_VALUE)
+                .addComponent(btnBatal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOK)
                 .addContainerGap())
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnBatal, btnOK});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()

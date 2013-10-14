@@ -39,25 +39,25 @@ public class AktivitasSaveNumberTest extends TestCase {
     
     // TODO add test methods here. The name must begin with 'test'. For example:
     public void testSaveNumber() {
-        Proyek p = (Proyek) jPlannerService.findAll(Proyek.class.getName()).get(0);
-        
-//        Aktivitas parent = null;
-        Aktivitas parent = (Aktivitas) jPlannerService.findAll(Aktivitas.class.getName()).get(3);
-        
-        Aktivitas a = new Aktivitas();
-        a.setDurasi(1);
-        a.setCreatedDate(new Date());
-        a.setNama("hihihi");
-        a.setParent(parent);
-        a.setProyek(p);
-        jPlannerService.saveAktivitas(a);
-        
-        a = new Aktivitas();
-        a.setDurasi(1);
-        a.setCreatedDate(new Date());
-        a.setNama("hohoho");
-        a.setParent(parent);
-        a.setProyek(p);
-        jPlannerService.saveAktivitas(a);
+//        Proyek p = (Proyek) jPlannerService.findAll(Proyek.class.getName()).get(0);
+//        
+////        Aktivitas parent = null;
+//        Aktivitas parent = (Aktivitas) jPlannerService.findAll(Aktivitas.class.getName()).get(3);
+//        
+//        Aktivitas a = new Aktivitas();
+//        a.setDurasi(1);
+//        a.setCreatedDate(new Date());
+//        a.setNama("hihihi");
+//        a.setParent(parent);
+//        a.setProyek(p);
+//        jPlannerService.saveAktivitas(a);
+//        
+//        a = new Aktivitas();
+//        a.setDurasi(1);
+//        a.setCreatedDate(new Date());
+//        a.setNama("hohoho");
+//        a.setParent(parent);
+//        a.setProyek(p);
+//        jPlannerService.saveAktivitas(a);
     }
 }
