@@ -163,7 +163,6 @@ public class MainForm extends javax.swing.JFrame {
         txtBiaya = new javax.swing.JTextField();
         pnlAktivitas = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        cmbAktivProyek = new javax.swing.JComboBox();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -183,6 +182,7 @@ public class MainForm extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         txtParentTask = new javax.swing.JTextField();
         btnLookupParentTask = new javax.swing.JButton();
+        txtAktivitasProyek = new javax.swing.JTextField();
         pnlSimulasi = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -404,7 +404,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -465,7 +465,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -564,7 +564,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -573,12 +573,6 @@ public class MainForm extends javax.swing.JFrame {
         pnlAktivitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Aktivitas"));
 
         jLabel12.setText("Proyek");
-
-        cmbAktivProyek.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbAktivProyekActionPerformed(evt);
-            }
-        });
 
         jLabel13.setText("Durasi");
 
@@ -663,7 +657,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
                 .addGap(18, 18, 18)
-                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAktivitasLayout.createSequentialGroup()
                         .addComponent(txtParentTask, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -676,11 +670,13 @@ public class MainForm extends javax.swing.JFrame {
                         .addComponent(spinnerDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14))
-                    .addComponent(txtNmAktivitas, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbAktivResource, 0, 369, Short.MAX_VALUE)
-                    .addComponent(cmbAktivProyek, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLookupProyek)
+                    .addComponent(cmbAktivResource, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                        .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtAktivitasProyek, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNmAktivitas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLookupProyek)))
                 .addContainerGap())
             .addGroup(pnlAktivitasLayout.createSequentialGroup()
                 .addContainerGap()
@@ -698,8 +694,8 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(cmbAktivProyek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLookupProyek))
+                    .addComponent(btnLookupProyek)
+                    .addComponent(txtAktivitasProyek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -726,7 +722,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -742,7 +738,7 @@ public class MainForm extends javax.swing.JFrame {
         );
         pnlSimulasiLayout.setVerticalGroup(
             pnlSimulasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addGap(0, 559, Short.MAX_VALUE)
         );
 
         jPanel2.add(pnlSimulasi, "SIMULASI");
@@ -851,16 +847,19 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimulasiActionPerformed
 
     private void resetFormAktivitas() {
-        cmbAktivProyek.removeAllItems();
+        txtAktivitasProyek.setText("");
         cmbAktivResource.removeAllItems();
         spinnerDurasi.removeAllItems();
         txtNmAktivitas.setText("");
         txtPredesesor.setText("");
+        
+        proyek = null;
+        proyeks = new ArrayList<Proyek>();
     }
     
     private void btnSimpanAktivitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanAktivitasActionPerformed
         aktivitas = new Aktivitas();
-        aktivitas.setProyek((Proyek)cmbAktivProyek.getSelectedItem());
+        aktivitas.setProyek(proyek);
 //        aktivitas.setResource((Resource)cmbAktivResource.getSelectedItem());
         aktivitas.setNama(txtNmAktivitas.getText());
         aktivitas.setDurasi((Integer)spinnerDurasi.getSelectedItem());
@@ -886,24 +885,21 @@ public class MainForm extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_btnLookupActionPerformed
 
-    private void cmbAktivProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAktivProyekActionPerformed
-        Proyek p = (Proyek) cmbAktivProyek.getSelectedItem();
-        
-        if (p != null) {
+    private void btnLookupProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupProyekActionPerformed
+        proyek = new DialogProyek().showDialog();
+        if (proyek != null) {
+            txtAktivitasProyek.setText(proyek.getNamaProyek());
+            
             // utk durasi hitung dengan cara sbb :
             // ambil semua aktivitas di project ini yg durasi-nya paling lama
             // trs kurangin durasi proyek dgn nilai durasi terlama
-            Integer durasiTerlama = JPlanner.getjPlannerService().findAktivitasByProject(p);
+            Integer durasiTerlama = JPlanner.getjPlannerService().findAktivitasByProject(proyek);
             System.out.println(">> Durasi " + durasiTerlama);
             spinnerDurasi.removeAllItems();
-            for (int i=1; i<=p.getBatasHari()-durasiTerlama; i++) {
+            for (int i=1; i<=proyek.getBatasHari()-durasiTerlama; i++) {
                 spinnerDurasi.addItem(i);
             }
         }
-    }//GEN-LAST:event_cmbAktivProyekActionPerformed
-
-    private void btnLookupProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupProyekActionPerformed
-        new DialogProyek().showDialog();
     }//GEN-LAST:event_btnLookupProyekActionPerformed
 
     private void btnLookupParentTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupParentTaskActionPerformed
@@ -911,13 +907,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLookupParentTaskActionPerformed
 
     private void initFormAktivitas() {
-        proyeks = new ArrayList<Proyek>();
-        proyeks = JPlanner.getjPlannerService().findAll(Proyek.class.getName());
-        cmbAktivProyek.removeAllItems();
-        for (Proyek p : proyeks) {
-            cmbAktivProyek.addItem(p);
-        }
-        
         resources = new ArrayList<Resource>();
         resources = JPlanner.getjPlannerService().findAvailableResource(Resource.class.getName());
         cmbAktivResource.removeAllItems();
@@ -949,7 +938,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSimpanResource;
     private javax.swing.JToggleButton btnSimulasi;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox cmbAktivProyek;
     private javax.swing.JComboBox cmbAktivResource;
     private javax.swing.JComboBox cmbGrup;
     private javax.swing.JComboBox cmbTipe;
@@ -992,6 +980,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable tblGrupResource;
     private javax.swing.JTable tblProyek;
     private javax.swing.JTable tblResource;
+    private javax.swing.JTextField txtAktivitasProyek;
     private javax.swing.JTextField txtBatasBiaya;
     private javax.swing.JTextField txtBatasHari;
     private javax.swing.JTextField txtBiaya;

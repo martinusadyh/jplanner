@@ -7,6 +7,9 @@ package jplanner;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import jplanner.domain.Proyek;
 import jplanner.modul.ProyekTableModel;
 
@@ -26,7 +29,9 @@ public class DialogProyek extends javax.swing.JDialog {
         super(new JFrame(), true);
         initComponents();
         fetchProyek();
-                
+        
+        tblProyek.getSelectionModel().addListSelectionListener(new TableSelection());
+        
         setLocationRelativeTo(null);
     }
     
@@ -125,9 +130,27 @@ public class DialogProyek extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if (proyek != null) {
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tidak ada Data yang dipilih !");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private class TableSelection implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+
+            if (tblProyek.getSelectedRow() >= 0) {
+                proyek = proyeks.get(tblProyek.getSelectedRow());
+            }
+        
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

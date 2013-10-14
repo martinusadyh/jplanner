@@ -35,9 +35,9 @@ public class JPlannerServiceImpl implements JPlannerService {
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
         
         // update resource dulu
-        Resource r = obj.getResource();
-        r.setIsUsed(Boolean.TRUE);
-        sessionFactory.getCurrentSession().saveOrUpdate(r);
+//        Resource r = obj.getResource();
+//        r.setIsUsed(Boolean.TRUE);
+//        sessionFactory.getCurrentSession().saveOrUpdate(r);
     }
 
     @Override

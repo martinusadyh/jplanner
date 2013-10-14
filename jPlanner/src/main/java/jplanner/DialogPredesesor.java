@@ -16,8 +16,8 @@ import jplanner.modul.AktifitasTableModel;
  */
 public class DialogPredesesor extends javax.swing.JDialog {
     
-    private List<Aktivitas> aktivitases;
-    private List<Aktivitas> aktivitases1;
+    private List<Aktivitas> aktivitases = new ArrayList<Aktivitas>();
+    private List<Aktivitas> aktivitases1 = new ArrayList<Aktivitas>();
 
     /**
      * Creates new form DialogPredesesor

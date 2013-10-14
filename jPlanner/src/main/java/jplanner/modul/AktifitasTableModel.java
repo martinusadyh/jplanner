@@ -46,8 +46,8 @@ public class AktifitasTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0 : return a.getProyek().getNamaProyek();
             case 1 : return a.getNama();
-            case 2 : return a.getResource().getNama();
-            case 3 : return a.getResource().getType();
+            case 2 : return "";
+            case 3 : return "";
             case 4 : return a.getPredesesor();
             default: return new Object();
         }
