@@ -9,6 +9,8 @@ import jplanner.domain.Aktivitas;
 import jplanner.domain.Proyek;
 import jplanner.domain.Resource;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public class JPlannerServiceImpl implements JPlannerService {
     
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     @Autowired private SessionFactory sessionFactory;
 
     @Override
@@ -32,12 +36,39 @@ public class JPlannerServiceImpl implements JPlannerService {
     @Override
     @Transactional(readOnly=false, rollbackFor= Exception.class)
     public void saveAktivitas(Aktivitas obj) {
+        obj.setNomorTask(generateNomorTask(obj.getProyek(), obj.getParent()));
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
         
         // update resource dulu
 //        Resource r = obj.getResource();
 //        r.setIsUsed(Boolean.TRUE);
 //        sessionFactory.getCurrentSession().saveOrUpdate(r);
+    }
+    
+    private String generateNomorTask(Proyek p, Aktivitas parent){
+        Aktivitas lastActivity = getLastAktivitasByProjectAndParent(p, parent);
+        
+        if(lastActivity==null){
+            if(parent==null) {
+                return "1";
+            } else {
+                return parent.getNomorTask() + ".1";
+            }
+        }
+        
+        String lastNumber = lastActivity.getNomorTask();
+        String[] splitedLastNumber = lastNumber.split("\\.");
+        String endChar = splitedLastNumber[splitedLastNumber.length - 1];
+        Integer nextNumber = Integer.valueOf(endChar) + 1;
+        
+        StringBuilder newNumber = new StringBuilder();
+        for (int i=0; i<splitedLastNumber.length-1; i++) {
+            newNumber.append(splitedLastNumber[i]);
+            newNumber.append(".");
+        }
+        newNumber.append(nextNumber);
+        
+        return newNumber.toString();
     }
 
     @Override
@@ -78,5 +109,22 @@ public class JPlannerServiceImpl implements JPlannerService {
         }
         
         return durasi;
+    }
+    
+    private Aktivitas getLastAktivitasByProjectAndParent(Proyek p, Aktivitas parent) {
+        if(parent != null){
+            return (Aktivitas) sessionFactory.getCurrentSession()
+                    .createQuery("select obj from Aktivitas obj where obj.proyek.id = :prmIDProyek and obj.parent.id = :prmIDParent order by obj.nomorTask desc")
+                    .setParameter("prmIDProyek", p.getId())
+                    .setParameter("prmIDParent", parent.getId())
+                    .setMaxResults(1)
+                    .uniqueResult();
+        } else {
+            return (Aktivitas) sessionFactory.getCurrentSession()
+                    .createQuery("select obj from Aktivitas obj where obj.proyek.id = :prmIDProyek and obj.parent is null order by obj.nomorTask desc")
+                    .setParameter("prmIDProyek", p.getId())
+                    .setMaxResults(1)
+                    .uniqueResult();
+        }
     }
 }

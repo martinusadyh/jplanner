@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -24,7 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author martinusadyh
  */
 @Entity
-@Table(name="aktivitas")
+@Table(name="aktivitas", uniqueConstraints=@UniqueConstraint(columnNames={"nomor_task", "proyek_id"}))
 public class Aktivitas implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -33,6 +34,9 @@ public class Aktivitas implements Serializable {
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
+    
+    @Column(name="nomor_task", nullable=false)
+    private String nomorTask;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdDate = new Date();
@@ -114,6 +118,14 @@ public class Aktivitas implements Serializable {
 
     public void setParent(Aktivitas parent) {
         this.parent = parent;
+    }
+
+    public String getNomorTask() {
+        return nomorTask;
+    }
+
+    public void setNomorTask(String nomorTask) {
+        this.nomorTask = nomorTask;
     }
     
     @Override
