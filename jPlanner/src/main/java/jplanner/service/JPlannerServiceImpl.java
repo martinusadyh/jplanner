@@ -67,10 +67,16 @@ public class JPlannerServiceImpl implements JPlannerService {
 
     @Override
     public Integer findAktivitasByProject(Proyek p) {
-        return (Integer) sessionFactory.getCurrentSession()
+        Integer durasi = (Integer) sessionFactory.getCurrentSession()
                 .createQuery("select obj.durasi from Aktivitas obj where obj.proyek.id = :prmIDProyek order by obj.durasi desc")
                 .setParameter("prmIDProyek", p.getId())
                 .setMaxResults(1)
                 .uniqueResult();
+        
+        if (durasi == null) {
+            durasi = 0;
+        }
+        
+        return durasi;
     }
 }
