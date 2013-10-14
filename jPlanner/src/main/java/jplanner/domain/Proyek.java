@@ -25,10 +25,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class Proyek implements Serializable {
     
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @Column(name="nama_proyek")
     private String namaProyek;
@@ -59,14 +58,14 @@ public class Proyek implements Serializable {
         this.aktivitases = aktivitases;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
+    
     public String getNamaProyek() {
         return namaProyek;
     }
@@ -113,5 +112,10 @@ public class Proyek implements Serializable {
 
     public void setMinProfit(BigDecimal minProfit) {
         this.minProfit = minProfit;
+    }
+
+    @Override
+    public String toString() {
+        return "Nama Proyek=[" + namaProyek + "]; Durasi=[" + batasHari + ']';
     }
 }

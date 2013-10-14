@@ -6,12 +6,14 @@ package jplanner;
 
 import java.awt.CardLayout;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jplanner.domain.Aktivitas;
 import jplanner.domain.GrupResource;
 import jplanner.domain.Proyek;
 import jplanner.domain.Resource;
+import jplanner.modul.AktifitasTableModel;
 import jplanner.modul.GrupTableModul;
 import jplanner.modul.ProyekTableModel;
 import jplanner.modul.ResourceTableModel;
@@ -30,6 +32,7 @@ public class MainForm extends javax.swing.JFrame {
     private List<Proyek> proyeks;
     private List<GrupResource> grupResources;
     private List<Resource> resources;
+    private List<Aktivitas> aktivitases;
 
     /**
      * Creates new form MainForm
@@ -37,13 +40,11 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        fetchProyek();
     }
     
     private void loadFormToDomainProyek() {
-        if (proyek == null) {
-            proyek = new Proyek();
-        }
-        
+        proyek = new Proyek();
         proyek.setNamaProyek(txtNamaProyek.getText());
         proyek.setJmlOrg(Integer.valueOf(txtJmlOrg.getText()));
         proyek.setBatasHari(Integer.valueOf(txtBatasHari.getText()));
@@ -53,10 +54,7 @@ public class MainForm extends javax.swing.JFrame {
     }
     
     private void loadFormToDomainResource() {
-        if (resource == null) {
-            resource = new Resource();
-        }
-        
+        resource = new Resource();
         resource.setGrupResource((GrupResource) cmbGrup.getSelectedItem());
         resource.setType(cmbTipe.getSelectedItem().toString());
         resource.setNama(txtNamaResource.getText());
@@ -98,6 +96,12 @@ public class MainForm extends javax.swing.JFrame {
         } else {
             return false;
         }
+    }
+    
+    private void fetchProyek() {
+        proyeks = new ArrayList<Proyek>();
+        proyeks = JPlanner.getjPlannerService().findAll(Proyek.class.getName());
+        tblProyek.setModel(new ProyekTableModel(proyeks));
     }
     
     
@@ -158,6 +162,24 @@ public class MainForm extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtBiaya = new javax.swing.JTextField();
         pnlAktivitas = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        cmbAktivProyek = new javax.swing.JComboBox();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        cmbAktivResource = new javax.swing.JComboBox();
+        jLabel16 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblAktivitas = new javax.swing.JTable();
+        jToolBar4 = new javax.swing.JToolBar();
+        btnSimpanAktivitas = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        txtNmAktivitas = new javax.swing.JTextField();
+        spinnerDurasi = new javax.swing.JComboBox();
+        txtPredesesor = new javax.swing.JTextField();
+        btnLookup = new javax.swing.JButton();
+        pnlSimulasi = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("jPlanner");
@@ -221,6 +243,11 @@ public class MainForm extends javax.swing.JFrame {
         btnSimulasi.setText("Simulasi");
         btnSimulasi.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimulasi.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSimulasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimulasiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -386,7 +413,7 @@ public class MainForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nama", "Jml. Resource", "Tot. Available"
+                "Nama", "Jml. Barang", "Jml. Orang", "Tot. Resource", "Tot. Available"
             }
         ));
         jScrollPane2.setViewportView(tblGrupResource);
@@ -541,18 +568,157 @@ public class MainForm extends javax.swing.JFrame {
 
         pnlAktivitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Aktivitas"));
 
+        jLabel12.setText("Proyek");
+
+        cmbAktivProyek.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAktivProyekActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Durasi");
+
+        jLabel14.setText("(hari)");
+
+        jLabel15.setText("Resource");
+
+        jLabel16.setText("Predesesor");
+
+        tblAktivitas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Proyek", "Aktivitas", "Resource", "Tipe", "Predesesor"
+            }
+        ));
+        jScrollPane4.setViewportView(tblAktivitas);
+
+        jToolBar4.setFloatable(false);
+        jToolBar4.setRollover(true);
+
+        btnSimpanAktivitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/accept.png"))); // NOI18N
+        btnSimpanAktivitas.setText("Simpan");
+        btnSimpanAktivitas.setFocusable(false);
+        btnSimpanAktivitas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSimpanAktivitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanAktivitasActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(btnSimpanAktivitas);
+
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arrow_refresh.png"))); // NOI18N
+        btnRefresh.setText("Refresh");
+        btnRefresh.setFocusable(false);
+        btnRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        jToolBar4.add(btnRefresh);
+
+        jLabel17.setText("Nama");
+
+        btnLookup.setText("...");
+        btnLookup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLookupActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAktivitasLayout = new javax.swing.GroupLayout(pnlAktivitas);
         pnlAktivitas.setLayout(pnlAktivitasLayout);
         pnlAktivitasLayout.setHorizontalGroup(
             pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addGap(18, 18, 18)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                        .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbAktivProyek, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbAktivResource, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNmAktivitas, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                                        .addComponent(spinnerDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel14)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                        .addComponent(txtPredesesor, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLookup)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE))
         );
+
+        pnlAktivitasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel12, jLabel13, jLabel15, jLabel16, jLabel17});
+
         pnlAktivitasLayout.setVerticalGroup(
             pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 531, Short.MAX_VALUE)
+            .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(cmbAktivProyek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtNmAktivitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(spinnerDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(cmbAktivResource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtPredesesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLookup))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel2.add(pnlAktivitas, "AKTIVITAS");
+
+        pnlSimulasi.setBorder(javax.swing.BorderFactory.createTitledBorder("Simulasi"));
+
+        javax.swing.GroupLayout pnlSimulasiLayout = new javax.swing.GroupLayout(pnlSimulasi);
+        pnlSimulasi.setLayout(pnlSimulasiLayout);
+        pnlSimulasiLayout.setHorizontalGroup(
+            pnlSimulasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 777, Short.MAX_VALUE)
+        );
+        pnlSimulasiLayout.setVerticalGroup(
+            pnlSimulasiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 531, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(pnlSimulasi, "SIMULASI");
 
         jSplitPane1.setRightComponent(jPanel2);
 
@@ -572,11 +738,13 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnGrupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrupActionPerformed
         showPanel("GRUP");
-        tblGrupResource.setModel(new GrupTableModul(JPlanner.getjPlannerService().findAll(GrupResource.class.getName())));
+        grupResources = JPlanner.getjPlannerService().findAll(GrupResource.class.getName());
+        tblGrupResource.setModel(new GrupTableModul(grupResources));
     }//GEN-LAST:event_btnGrupActionPerformed
 
     private void btnProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProyekActionPerformed
         showPanel("PROYEK");
+        fetchProyek();
     }//GEN-LAST:event_btnProyekActionPerformed
 
     private void btnResourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResourceActionPerformed
@@ -586,15 +754,20 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnAktivitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAktivitasActionPerformed
         showPanel("AKTIVITAS");
+        initFormAktivitas();
     }//GEN-LAST:event_btnAktivitasActionPerformed
 
     private void initFormResource() {
         resetFormResource();
+        grupResources = new ArrayList<GrupResource>();
         grupResources = JPlanner.getjPlannerService().findAll(GrupResource.class.getName());
+        cmbGrup.removeAllItems();
         for (GrupResource gr : grupResources) {
             cmbGrup.addItem(gr);
         }
-        tblResource.setModel(new ResourceTableModel(JPlanner.getjPlannerService().findAll(Resource.class.getName())));
+        resources = new ArrayList<Resource>();
+        resources = JPlanner.getjPlannerService().findAll(Resource.class.getName());
+        tblResource.setModel(new ResourceTableModel(resources));
     }
     
     private void btnSimpanProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanProyekActionPerformed
@@ -620,9 +793,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnSimpanGrupResourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanGrupResourceActionPerformed
         if (txtNmGrup.getText().trim().length() > 0) {
-            if (grupResource == null) {
-                grupResource = new GrupResource();
-            }
+            grupResource = new GrupResource();
             grupResource.setNama(txtNmGrup.getText());
             JPlanner.getjPlannerService().save(grupResource);
             tblGrupResource.setModel(new GrupTableModul(JPlanner.getjPlannerService().findAll(GrupResource.class.getName())));
@@ -648,6 +819,80 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSimpanResourceActionPerformed
 
+    private void btnSimulasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimulasiActionPerformed
+        showPanel("SIMULASI");
+    }//GEN-LAST:event_btnSimulasiActionPerformed
+
+    private void resetFormAktivitas() {
+        cmbAktivProyek.removeAllItems();
+        cmbAktivResource.removeAllItems();
+        spinnerDurasi.removeAllItems();
+        txtNmAktivitas.setText("");
+        txtPredesesor.setText("");
+    }
+    
+    private void btnSimpanAktivitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanAktivitasActionPerformed
+        aktivitas = new Aktivitas();
+        aktivitas.setProyek((Proyek)cmbAktivProyek.getSelectedItem());
+        aktivitas.setResource((Resource)cmbAktivResource.getSelectedItem());
+        aktivitas.setNama(txtNmAktivitas.getText());
+        aktivitas.setDurasi((Integer)spinnerDurasi.getSelectedItem());
+        
+        JPlanner.getjPlannerService().saveAktivitas(aktivitas);
+        resetFormAktivitas();
+        initFormAktivitas();
+    }//GEN-LAST:event_btnSimpanAktivitasActionPerformed
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        tblAktivitas.setModel(new AktifitasTableModel(JPlanner.getjPlannerService().findAll(Aktivitas.class.getName())));
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnLookupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupActionPerformed
+         List<Aktivitas> akts = new DialogPredesesor().showDialog();
+         StringBuilder sb = new StringBuilder();
+         if (!akts.isEmpty()) {
+             for (Aktivitas ak : akts) {
+                sb.append(ak.getId()).append(";");
+            }
+
+            txtPredesesor.setText(sb.toString());
+         }
+    }//GEN-LAST:event_btnLookupActionPerformed
+
+    private void cmbAktivProyekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAktivProyekActionPerformed
+        Proyek p = (Proyek) cmbAktivProyek.getSelectedItem();
+        
+        if (p != null) {
+            // utk durasi hitung dengan cara sbb :
+            // ambil semua aktivitas di project ini yg durasi-nya paling lama
+            // trs kurangin durasi proyek dgn nilai durasi terlama
+            Integer durasiTerlama = JPlanner.getjPlannerService().findAktivitasByProject(p);
+            System.out.println("Durasi " + durasiTerlama);
+            spinnerDurasi.removeAllItems();
+            for (int i=1; i<=p.getBatasHari()-durasiTerlama; i++) {
+                spinnerDurasi.addItem(i);
+            }
+        }
+    }//GEN-LAST:event_cmbAktivProyekActionPerformed
+
+    private void initFormAktivitas() {
+        proyeks = new ArrayList<Proyek>();
+        proyeks = JPlanner.getjPlannerService().findAll(Proyek.class.getName());
+        cmbAktivProyek.removeAllItems();
+        for (Proyek p : proyeks) {
+            cmbAktivProyek.addItem(p);
+        }
+        
+        resources = new ArrayList<Resource>();
+        resources = JPlanner.getjPlannerService().findAvailableResource(Resource.class.getName());
+        cmbAktivResource.removeAllItems();
+        for (Resource r : resources) {
+            cmbAktivResource.addItem(r);
+        }
+        
+        tblAktivitas.setModel(new AktifitasTableModel(JPlanner.getjPlannerService().findAll(Aktivitas.class.getName())));
+    }
+    
     private void showPanel(String panelName) {
         CardLayout cl = (CardLayout) (jPanel2.getLayout());
         cl.show(jPanel2, panelName);
@@ -656,19 +901,30 @@ public class MainForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAktivitas;
     private javax.swing.JToggleButton btnGrup;
+    private javax.swing.JButton btnLookup;
     private javax.swing.JToggleButton btnProyek;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnRefreshProyek;
     private javax.swing.JToggleButton btnResource;
+    private javax.swing.JButton btnSimpanAktivitas;
     private javax.swing.JButton btnSimpanGrupResource;
     private javax.swing.JButton btnSimpanProyek;
     private javax.swing.JButton btnSimpanResource;
     private javax.swing.JToggleButton btnSimulasi;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox cmbAktivProyek;
+    private javax.swing.JComboBox cmbAktivResource;
     private javax.swing.JComboBox cmbGrup;
     private javax.swing.JComboBox cmbTipe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -682,14 +938,19 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JToolBar jToolBar4;
     private javax.swing.JPanel pnlAktivitas;
     private javax.swing.JPanel pnlGrup;
     private javax.swing.JPanel pnlProyek;
     private javax.swing.JPanel pnlResource;
+    private javax.swing.JPanel pnlSimulasi;
+    private javax.swing.JComboBox spinnerDurasi;
+    private javax.swing.JTable tblAktivitas;
     private javax.swing.JTable tblGrupResource;
     private javax.swing.JTable tblProyek;
     private javax.swing.JTable tblResource;
@@ -701,6 +962,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtMinProfit;
     private javax.swing.JTextField txtNamaProyek;
     private javax.swing.JTextField txtNamaResource;
+    private javax.swing.JTextField txtNmAktivitas;
     private javax.swing.JTextField txtNmGrup;
+    private javax.swing.JTextField txtPredesesor;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,19 +5,15 @@
 package jplanner.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.ManyToAny;
 
 /**
  *
@@ -30,10 +26,9 @@ public class Aktivitas implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdDate = new Date();
@@ -41,13 +36,21 @@ public class Aktivitas implements Serializable {
     private String nama;
     private Integer durasi = Integer.valueOf("0");
     
-    @OneToMany(mappedBy="aktivitas")
-    private List<Resource> resources = new ArrayList<Resource>();
+    @ManyToOne
+    private Resource resource;
     
     @ManyToOne
     private Proyek proyek;
     
     private String predesesor;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -55,14 +58,6 @@ public class Aktivitas implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNama() {
@@ -81,12 +76,12 @@ public class Aktivitas implements Serializable {
         this.durasi = durasi;
     }
 
-    public List<Resource> getResources() {
-        return resources;
+    public Resource getResource() {
+        return resource;
     }
 
-    public void setResources(List<Resource> resources) {
-        this.resources = resources;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public Proyek getProyek() {
@@ -103,5 +98,10 @@ public class Aktivitas implements Serializable {
 
     public void setPredesesor(String predesesor) {
         this.predesesor = predesesor;
+    }
+
+    @Override
+    public String toString() {
+        return "Nama Aktivitas=[" + nama + ']';
     }
 }

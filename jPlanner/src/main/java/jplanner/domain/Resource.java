@@ -6,12 +6,15 @@ package jplanner.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,10 +30,9 @@ public class Resource implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdDate = new Date();
@@ -42,11 +44,19 @@ public class Resource implements Serializable {
     @ManyToOne
     private GrupResource grupResource;
     
-    @ManyToOne
-    private Aktivitas aktivitas;
+    @OneToMany(mappedBy="resource")
+    private List<Aktivitas> aktivitases = new ArrayList<Aktivitas>();
     
     @Column(name="is_used")
     private Boolean isUsed = Boolean.FALSE;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -54,14 +64,6 @@ public class Resource implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNama() {
@@ -96,12 +98,12 @@ public class Resource implements Serializable {
         this.grupResource = grupResource;
     }
 
-    public Aktivitas getAktivitas() {
-        return aktivitas;
+    public List<Aktivitas> getAktivitases() {
+        return aktivitases;
     }
 
-    public void setAktivitas(Aktivitas aktivitas) {
-        this.aktivitas = aktivitas;
+    public void setAktivitases(List<Aktivitas> aktivitases) {
+        this.aktivitases = aktivitases;
     }
 
     public Boolean getIsUsed() {
@@ -110,5 +112,10 @@ public class Resource implements Serializable {
 
     public void setIsUsed(Boolean isUsed) {
         this.isUsed = isUsed;
+    }
+
+    @Override
+    public String toString() {
+        return "Nama Resource=[" + nama + "], Type=[" + type + "], Biaya=[" + biaya + ']';
     }
 }

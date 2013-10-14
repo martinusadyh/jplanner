@@ -17,7 +17,8 @@ import jplanner.domain.Resource;
 public class GrupTableModul extends AbstractTableModel {
     
     private List<GrupResource> grups = new ArrayList<GrupResource>();
-    private String[] header = new String[] { "Nama", "Jml. Resource", "Tot. Available" };
+    private String[] header = new String[] { "Nama", "Jml. Barang", "Jml. Orang", 
+        "Tot. Resource", "Tot. Available" };
 
     public GrupTableModul(List<GrupResource> grupResources) {
         this.grups = grupResources;
@@ -47,14 +48,36 @@ public class GrupTableModul extends AbstractTableModel {
         }
         return counter;
     }
+    
+    private Integer getBarang(GrupResource p) {
+        int jmlBrg = 0;
+        for (Resource r : p.getResources()) {
+            if (r.getType().equalsIgnoreCase("BARANG")) {
+                jmlBrg++;
+            }
+        }
+        return jmlBrg;
+    }
+    
+    private Integer getOrang(GrupResource p) {
+        int jmlOrg = 0;
+        for (Resource r : p.getResources()) {
+            if (r.getType().equalsIgnoreCase("ORANG")) {
+                jmlOrg++;
+            }
+        }
+        return jmlOrg;
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         GrupResource p = grups.get(rowIndex);
         switch (columnIndex) {
             case 0 : return p.getNama();
-            case 1 : return p.getResources().size();
-            case 2 : return getAvailableResource(p);
+            case 1 : return getBarang(p);
+            case 2 : return getOrang(p);
+            case 3 : return p.getResources().size();
+            case 4 : return getAvailableResource(p);
             default: return new Object();
         }
     }

@@ -29,10 +29,9 @@ public class GrupResource implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+    @GeneratedValue
     @Column(name = "id")
-    private String id;
+    private Integer id;
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date createdDate = new Date();
@@ -50,11 +49,11 @@ public class GrupResource implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -5,7 +5,9 @@
 package jplanner.service;
 
 import java.util.List;
+import jplanner.domain.Aktivitas;
 import jplanner.domain.Proyek;
+import jplanner.domain.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,17 @@ public class JPlannerServiceImpl implements JPlannerService {
     public void save(Object obj) {
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
     }
+    
+    @Override
+    @Transactional(readOnly=false, rollbackFor= Exception.class)
+    public void saveAktivitas(Aktivitas obj) {
+        sessionFactory.getCurrentSession().saveOrUpdate(obj);
+        
+        // update resource dulu
+        Resource r = obj.getResource();
+        r.setIsUsed(Boolean.TRUE);
+        sessionFactory.getCurrentSession().saveOrUpdate(r);
+    }
 
     @Override
     public List findAll(String className) {
@@ -35,5 +48,29 @@ public class JPlannerServiceImpl implements JPlannerService {
         return sessionFactory.getCurrentSession()
                 .createQuery("from " + className)
                 .list();
+    }
+
+    @Override
+    public List<Resource> findAvailableResource(String name) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Resource r where r.isUsed = false")
+                .list();
+    }
+
+    @Override
+    public List<Aktivitas> findAllAktivitasByProject(Proyek proyek) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Aktivitas a where a.proyek.id = :prmProyekSID")
+                .setParameter("prmProyekSID", proyek.getId())
+                .list();
+    }
+
+    @Override
+    public Integer findAktivitasByProject(Proyek p) {
+        return (Integer) sessionFactory.getCurrentSession()
+                .createQuery("select obj.durasi from Aktivitas obj where obj.proyek.id = :prmIDProyek order by obj.durasi desc")
+                .setParameter("prmIDProyek", p.getId())
+                .setMaxResults(1)
+                .uniqueResult();
     }
 }
