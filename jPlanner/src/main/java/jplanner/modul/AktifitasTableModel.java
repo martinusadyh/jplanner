@@ -7,6 +7,7 @@ package jplanner.modul;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import jplanner.domain.Aktivitas;
+import jplanner.domain.Resource;
 
 /**
  *
@@ -15,7 +16,8 @@ import jplanner.domain.Aktivitas;
 public class AktifitasTableModel extends AbstractTableModel {
     
     private List<Aktivitas> aktivitases;
-    private String[] header = new String[] { "Proyek", "Aktivitas", "Resource", "Tipe", "Predesesor" };
+    private String[] header = new String[] { "Proyek", "Aktivitas", "Durasi (hari)", 
+        "Resource", "Predesesor" };
 
     public AktifitasTableModel(List<Aktivitas> aktivitases) {
         this.aktivitases = aktivitases;
@@ -39,6 +41,15 @@ public class AktifitasTableModel extends AbstractTableModel {
     public String getColumnName(int column) {
         return header[column];
     }
+    
+    private String getResources(Aktivitas a) {
+        StringBuilder sb = new StringBuilder();
+        for (Resource r : a.getResources()) {
+            sb.append(r.getNama()).append(", ");
+        }
+        
+        return sb.toString();
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -46,8 +57,8 @@ public class AktifitasTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0 : return a.getProyek().getNamaProyek();
             case 1 : return a.getNama();
-            case 2 : return "";
-            case 3 : return "";
+            case 2 : return a.getDurasi();
+            case 3 : return getResources(a);
             case 4 : return a.getPredesesor();
             default: return new Object();
         }

@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -44,7 +47,8 @@ public class Aktivitas implements Serializable {
     private String nama;
     private Integer durasi = Integer.valueOf("0");
     
-    @OneToMany(mappedBy = "aktivitas")
+    @OneToMany(mappedBy = "aktivitas", fetch= FetchType.EAGER)
+    @Cascade(CascadeType.SAVE_UPDATE)
     private List<Resource> resources = new ArrayList<Resource>();
     
     @ManyToOne

@@ -20,54 +20,58 @@ import org.springframework.transaction.annotation.Transactional;
  * @author martinusadyh
  */
 @Service("jplannerService")
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 public class JPlannerServiceImpl implements JPlannerService {
-    
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
-    @Autowired private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    @Transactional(readOnly=false)
+    @Transactional(readOnly = false)
     public void save(Object obj) {
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
     }
-    
+
     @Override
-    @Transactional(readOnly=false, rollbackFor= Exception.class)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void saveAktivitas(Aktivitas obj) {
         obj.setNomorTask(generateNomorTask(obj.getProyek(), obj.getParent()));
         sessionFactory.getCurrentSession().saveOrUpdate(obj);
-        
+
         // update resource dulu
-//        Resource r = obj.getResource();
-//        r.setIsUsed(Boolean.TRUE);
-//        sessionFactory.getCurrentSession().saveOrUpdate(r);
+        List<Resource> resources = obj.getResources();
+        for (Resource r : resources) {
+            r.setIsUsed(Boolean.TRUE);
+            r.setAktivitas(obj);
+
+            sessionFactory.getCurrentSession().saveOrUpdate(r);
+        }
     }
-    
-    private String generateNomorTask(Proyek p, Aktivitas parent){
+
+    private String generateNomorTask(Proyek p, Aktivitas parent) {
         Aktivitas lastActivity = getLastAktivitasByProjectAndParent(p, parent);
-        
-        if(lastActivity==null){
-            if(parent==null) {
+
+        if (lastActivity == null) {
+            if (parent == null) {
                 return "1";
             } else {
                 return parent.getNomorTask() + ".1";
             }
         }
-        
+
         String lastNumber = lastActivity.getNomorTask();
         String[] splitedLastNumber = lastNumber.split("\\.");
         String endChar = splitedLastNumber[splitedLastNumber.length - 1];
         Integer nextNumber = Integer.valueOf(endChar) + 1;
-        
+
         StringBuilder newNumber = new StringBuilder();
-        for (int i=0; i<splitedLastNumber.length-1; i++) {
+        for (int i = 0; i < splitedLastNumber.length - 1; i++) {
             newNumber.append(splitedLastNumber[i]);
             newNumber.append(".");
         }
         newNumber.append(nextNumber);
-        
+
         return newNumber.toString();
     }
 
@@ -103,16 +107,16 @@ public class JPlannerServiceImpl implements JPlannerService {
                 .setParameter("prmIDProyek", p.getId())
                 .setMaxResults(1)
                 .uniqueResult();
-        
+
         if (durasi == null) {
             durasi = 0;
         }
-        
+
         return durasi;
     }
-    
+
     private Aktivitas getLastAktivitasByProjectAndParent(Proyek p, Aktivitas parent) {
-        if(parent != null){
+        if (parent != null) {
             return (Aktivitas) sessionFactory.getCurrentSession()
                     .createQuery("select obj from Aktivitas obj where obj.proyek.id = :prmIDProyek and obj.parent.id = :prmIDParent order by obj.nomorTask desc")
                     .setParameter("prmIDProyek", p.getId())
@@ -126,5 +130,12 @@ public class JPlannerServiceImpl implements JPlannerService {
                     .setMaxResults(1)
                     .uniqueResult();
         }
+    }
+
+    @Override
+    public List<Aktivitas> findAllAktivitas() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Aktivitas a")
+                .list();
     }
 }
