@@ -180,6 +180,9 @@ public class MainForm extends javax.swing.JFrame {
         txtPredesesor = new javax.swing.JTextField();
         btnLookup = new javax.swing.JButton();
         btnLookupProyek = new javax.swing.JButton();
+        jLabel18 = new javax.swing.JLabel();
+        txtParentTask = new javax.swing.JTextField();
+        btnLookupParentTask = new javax.swing.JButton();
         pnlSimulasi = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -277,7 +280,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(btnAktivitas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSimulasi)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAktivitas, btnGrup, btnProyek, btnResource});
@@ -401,7 +404,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -462,7 +465,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -561,7 +564,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -637,6 +640,15 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel18.setText("Parent Task");
+
+        btnLookupParentTask.setText("...");
+        btnLookupParentTask.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLookupParentTaskActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAktivitasLayout = new javax.swing.GroupLayout(pnlAktivitas);
         pnlAktivitas.setLayout(pnlAktivitasLayout);
         pnlAktivitasLayout.setHorizontalGroup(
@@ -648,31 +660,30 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(jLabel15)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel17))
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18))
                 .addGap(18, 18, 18)
-                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlAktivitasLayout.createSequentialGroup()
-                        .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbAktivProyek, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbAktivResource, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlAktivitasLayout.createSequentialGroup()
-                                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNmAktivitas, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
-                                        .addComponent(spinnerDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel14)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(txtParentTask, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLookupProyek)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnLookupParentTask))
                     .addGroup(pnlAktivitasLayout.createSequentialGroup()
                         .addComponent(txtPredesesor, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLookup)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(btnLookup))
+                    .addGroup(pnlAktivitasLayout.createSequentialGroup()
+                        .addComponent(spinnerDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14))
+                    .addComponent(txtNmAktivitas, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbAktivResource, 0, 369, Short.MAX_VALUE)
+                    .addComponent(cmbAktivProyek, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLookupProyek)
+                .addContainerGap())
             .addGroup(pnlAktivitasLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(jToolBar4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlAktivitasLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
@@ -708,9 +719,14 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(txtPredesesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLookup))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlAktivitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtParentTask, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLookupParentTask))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToolBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -890,6 +906,10 @@ public class MainForm extends javax.swing.JFrame {
         new DialogProyek().showDialog();
     }//GEN-LAST:event_btnLookupProyekActionPerformed
 
+    private void btnLookupParentTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupParentTaskActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLookupParentTaskActionPerformed
+
     private void initFormAktivitas() {
         proyeks = new ArrayList<Proyek>();
         proyeks = JPlanner.getjPlannerService().findAll(Proyek.class.getName());
@@ -917,6 +937,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnAktivitas;
     private javax.swing.JToggleButton btnGrup;
     private javax.swing.JButton btnLookup;
+    private javax.swing.JButton btnLookupParentTask;
     private javax.swing.JButton btnLookupProyek;
     private javax.swing.JToggleButton btnProyek;
     private javax.swing.JButton btnRefresh;
@@ -941,6 +962,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -980,6 +1002,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtNamaResource;
     private javax.swing.JTextField txtNmAktivitas;
     private javax.swing.JTextField txtNmGrup;
+    private javax.swing.JTextField txtParentTask;
     private javax.swing.JTextField txtPredesesor;
     // End of variables declaration//GEN-END:variables
 }
