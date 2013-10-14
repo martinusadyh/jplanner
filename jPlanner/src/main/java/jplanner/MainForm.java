@@ -861,7 +861,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnSimpanAktivitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanAktivitasActionPerformed
         aktivitas = new Aktivitas();
         aktivitas.setProyek((Proyek)cmbAktivProyek.getSelectedItem());
-        aktivitas.setResource((Resource)cmbAktivResource.getSelectedItem());
+//        aktivitas.setResource((Resource)cmbAktivResource.getSelectedItem());
         aktivitas.setNama(txtNmAktivitas.getText());
         aktivitas.setDurasi((Integer)spinnerDurasi.getSelectedItem());
         
