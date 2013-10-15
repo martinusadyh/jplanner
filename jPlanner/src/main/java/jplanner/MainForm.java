@@ -890,7 +890,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanAktivitasActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        tblAktivitas.setModel(new AktifitasTableModel(JPlanner.getjPlannerService().findAll(Aktivitas.class.getName())));
+        tblAktivitas.setModel(new AktifitasTableModel(JPlanner.getjPlannerService().findAllAktivitas()));
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnLookupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLookupActionPerformed
