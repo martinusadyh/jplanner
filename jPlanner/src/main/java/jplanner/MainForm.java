@@ -868,6 +868,7 @@ public class MainForm extends javax.swing.JFrame {
         txtParentTask.setText("");
         
         proyek = null;
+        aktivitas = null;
         parent = null;
         proyeks = new ArrayList<Proyek>();
         
@@ -878,6 +879,7 @@ public class MainForm extends javax.swing.JFrame {
         aktivitas = new Aktivitas();
         aktivitas.setProyek(proyek);
         aktivitas.setResources(selectedResources);
+        aktivitas.setPredesesor(txtPredesesor.getText());
         aktivitas.setNama(txtNmAktivitas.getText());
         aktivitas.setDurasi((Integer)spinnerDurasi.getSelectedItem());
         aktivitas.setParent(parent);

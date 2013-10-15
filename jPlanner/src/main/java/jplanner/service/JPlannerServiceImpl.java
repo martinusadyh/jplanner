@@ -70,6 +70,9 @@ public class JPlannerServiceImpl implements JPlannerService {
             newNumber.append(".");
         }
         newNumber.append(nextNumber);
+        
+        // membersihkan object aktivitas yang sudah di load
+        sessionFactory.getCurrentSession().clear();
 
         return newNumber.toString();
     }
